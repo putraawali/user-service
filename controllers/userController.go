@@ -19,22 +19,20 @@ func UserRegister(c *gin.Context) {
 
 	user := models.User{}
 
+	var err error
+
 	if contentType == appJSON {
-		if err := c.ShouldBindBodyWithJSON(&user); err != nil {
-			c.JSON(http.StatusBadRequest, gin.H{
-				"error":   "Bad Request",
-				"message": err.Error(),
-			})
-			return
-		}
+		err = c.ShouldBindBodyWithJSON(&user)
 	} else {
-		if err := c.ShouldBind(&user); err != nil {
-			c.JSON(http.StatusBadRequest, gin.H{
-				"error":   "Bad Request",
-				"message": err.Error(),
-			})
-			return
-		}
+		err = c.ShouldBind(&user)
+	}
+
+	if err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{
+			"error":   "Bad Request",
+			"message": err.Error(),
+		})
+		return
 	}
 
 	if err := db.Debug().Create(&user).Error; err != nil {

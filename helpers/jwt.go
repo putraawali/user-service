@@ -26,12 +26,13 @@ func VerifyToken(c *gin.Context) (interface{}, error) {
 	errResponse := errors.New("sign in to proceed")
 	headerToken := c.Request.Header.Get("Authorization")
 
-	if !strings.HasPrefix(headerToken, "Bearer ") {
+	if !strings.HasPrefix(headerToken, "Bearer ") { // Bearer tokennyaDisini
 		return nil, errResponse
 	}
 
+	// Bearer tokennyaDisini
 	stringToken := strings.TrimPrefix(headerToken, "Bearer ")
-
+	// tokennyaDisini
 	token, _ := jwt.Parse(stringToken, func(t *jwt.Token) (interface{}, error) {
 		if _, ok := t.Method.(*jwt.SigningMethodHMAC); !ok {
 			return nil, errResponse
