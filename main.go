@@ -1,14 +1,22 @@
 package main
 
 import (
+	"fmt"
+	"os"
 	"user-service/database"
 	"user-service/router"
+
+	"github.com/subosito/gotenv"
 )
+
+func init() {
+	gotenv.Load()
+}
 
 func main() {
 	database.StartDB()
 
 	r := router.StartApp()
 
-	r.Run(":8080")
+	r.Run(fmt.Sprintf(":%s", os.Getenv("PORT")))
 }
