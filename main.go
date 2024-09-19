@@ -18,5 +18,6 @@ func main() {
 
 	r := router.StartApp()
 
+	fmt.Println("User Service running on port:", os.Getenv("PORT"))
 	r.Run(fmt.Sprintf(":%s", os.Getenv("PORT")))
 }
